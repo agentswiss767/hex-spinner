@@ -27,22 +27,27 @@ body {
   animation: rotate 2s linear infinite;
 }
 
+.ball-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  animation: orbit 2s linear infinite;
+}
+
 .ball {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -120%);
+  transform: translate(-50%, -50%) translateY(-80%);
   background-color: red;
   border-radius: 50%;
   width: 30px;
   height: 30px;
 }
 
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
+/* Sizes */
 .hex-small { width: 100px; height: 100px; }
 .hex-medium { width: 200px; height: 200px; }
 .hex-big { width: 300px; height: 300px; }
@@ -50,3 +55,14 @@ body {
 .ball-small { width: 15px; height: 15px; }
 .ball-medium { width: 30px; height: 30px; }
 .ball-big { width: 50px; height: 50px; }
+
+/* Animations */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}

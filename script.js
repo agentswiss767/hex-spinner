@@ -5,11 +5,13 @@ const ballColor = document.getElementById("ballColor");
 const hexColor = document.getElementById("hexColor");
 const hexagon = document.querySelector(".hexagon");
 const ball = document.querySelector(".ball");
+const ballWrapper = document.querySelector(".ball-wrapper");
 const tick = document.getElementById("spinSound");
 
 function updateSpeed() {
   const speed = 100 / speedSlider.value;
   hexagon.style.animationDuration = `${speed}s`;
+  ballWrapper.style.animationDuration = `${speed}s`;
 }
 
 function updateSize() {
@@ -27,8 +29,8 @@ function updateColor() {
 function tickSoundLoop() {
   let lastTime = performance.now();
   function loop(now) {
-    const duration = parseFloat(getComputedStyle(hexagon).animationDuration) * 1000;
-    if ((now - lastTime) > duration) {
+    const dur = parseFloat(getComputedStyle(hexagon).animationDuration) * 1000;
+    if ((now - lastTime) > dur) {
       tick.currentTime = 0;
       tick.play();
       lastTime = now;

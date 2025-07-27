@@ -1,2 +1,52 @@
-.container { cursor: grab; }
-.container:active { cursor: grabbing; }
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #f5f5f5;
+  text-align: center;
+  padding: 20px;
+}
+
+.controls label {
+  margin: 10px;
+  display: inline-block;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.hexagon {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background: #ccc;
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  animation: rotate 2s linear infinite;
+}
+
+.ball {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -120%);
+  background-color: red;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.hex-small { width: 100px; height: 100px; }
+.hex-medium { width: 200px; height: 200px; }
+.hex-big { width: 300px; height: 300px; }
+
+.ball-small { width: 15px; height: 15px; }
+.ball-medium { width: 30px; height: 30px; }
+.ball-big { width: 50px; height: 50px; }

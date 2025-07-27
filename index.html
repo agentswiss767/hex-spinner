@@ -1,16 +1,40 @@
-<div class="controls">
-  <!-- Existing controls... -->
-  <label>Ball Color:
-    <input type="color" id="ballColor" value="#ff0000" />
-  </label>
-  <label>Hexagon Color:
-    <input type="color" id="hexColor" value="#cccccc" />
-  </label>
-</div>
-<audio id="spinSound" src="tick.mp3" preload="auto"></audio>
-
-<div class="container">
-  <div class="hexagon">
-    <div class="ball"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hexagon Spinner</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="controls">
+    <label>Speed: <input type="range" id="speedControl" min="10" max="100" value="50"/></label>
+    <label>Ball Size: 
+      <select id="ballSize">
+        <option value="small">Small</option>
+        <option value="medium" selected>Medium</option>
+        <option value="big">Big</option>
+      </select>
+    </label>
+    <label>Hexagon Size: 
+      <select id="hexSize">
+        <option value="small">Small</option>
+        <option value="medium" selected>Medium</option>
+        <option value="big">Big</option>
+      </select>
+    </label>
+    <label>Ball Color: <input type="color" id="ballColor" value="#ff0000"/></label>
+    <label>Hexagon Color: <input type="color" id="hexColor" value="#cccccc"/></label>
   </div>
-</div>
+
+  <div class="container">
+    <div class="hexagon">
+      <div class="ball"></div>
+    </div>
+  </div>
+
+  <audio id="spinSound" src="tick.mp3" preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>

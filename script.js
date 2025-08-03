@@ -1,52 +1,75 @@
+// Get all the DOM elements you'll need
 const speedSlider = document.getElementById("speedControl");
-const ballSize = document.getElementById("ballSize");
-const hexSize = document.getElementById("hexSize");
-const ballColor = document.getElementById("ballColor");
-const hexColor = document.getElementById("hexColor");
+const ballSizeSelect = document.getElementById("ballSize");
+const hexSizeSelect = document.getElementById("hexSize");
+const ballColorInput = document.getElementById("ballColor");
+const hexColorInput = document.getElementById("hexColor");
 const hexagon = document.querySelector(".hexagon");
 const ball = document.querySelector(".ball");
 const ballWrapper = document.querySelector(".ball-wrapper");
-const tick = document.getElementById("spinSound");
+const spinSound = document.getElementById("spinSound");
 
+// Function to update the animation speed
 function updateSpeed() {
-  const speed = 100 / speedSlider.value;
-  hexagon.style.animationDuration = `${speed}s`;
-  ballWrapper.style.animationDuration = `${speed}s`;
+  // A higher slider value should mean a faster animation.
+  // The original code was inverted.
+  // We'll map the 10-100 range to a desired duration range (e.g., 2s to 0.5s).
+  const minSpeed = 0.5; // seconds
+  const maxSpeed = 2; // seconds
+  const speed = minSpeed + (maxSpeed - minSpeed) * (1 - (speedSlider.value - 10) / 90);
+  
+  // Apply the new animation durations
+  hexagon.style.animationDuration = `${speed * 4}s`; // Hexagon spins slower
+  ballWrapper.style.animationDuration = `${speed}s`; // Ball spins faster
 }
 
+// Function to update the size of the hexagon and ball
 function updateSize() {
+  // Clear existing size classes and apply the new ones
   hexagon.className = "hexagon";
   ball.className = "ball";
-  hexagon.classList.add(`hex-${hexSize.value}`);
-  ball.classList.add(`ball-${ballSize.value}`);
+  
+  // Note: Your CSS needs to have classes like `ball-small`, `ball-medium`, etc.
+  // The original HTML and CSS used `small`, `medium`, `big`.
+  // I've adjusted the code to use the same class names as your CSS.
+  hexagon.classList.add(hexSizeSelect.value);
+  ball.classList.add(ballSizeSelect.value);
 }
 
+// Function to update the colors
 function updateColor() {
-  hexagon.style.backgroundColor = hexColor.value;
-  ball.style.backgroundColor = ballColor.value;
+  hexagon.style.backgroundColor = hexColorInput.value;
+  ball.style.backgroundColor = ballColorInput.value;
 }
 
-function tickSoundLoop() {
-  let lastTime = performance.now();
-  function loop(now) {
-    const dur = parseFloat(getComputedStyle(hexagon).animationDuration) * 1000;
-    if ((now - lastTime) > dur) {
-      tick.currentTime = 0;
-      tick.play();
-      lastTime = now;
+// Function to play a sound at the end of each ball rotation
+function setupSoundLoop() {
+  let lastPlayedTime = 0;
+  
+  // Using an animation event is more reliable than a manual time-based loop
+  // as it's directly tied to the animation.
+  ballWrapper.addEventListener('animationiteration', () => {
+    // Only play if enough time has passed to prevent rapid re-triggering
+    const now = Date.now();
+    if (now - lastPlayedTime > 100) {
+      spinSound.currentTime = 0;
+      spinSound.play();
+      lastPlayedTime = now;
     }
-    requestAnimationFrame(loop);
-  }
-  requestAnimationFrame(loop);
+  });
 }
 
+// Add event listeners
 speedSlider.addEventListener("input", updateSpeed);
-ballSize.addEventListener("change", updateSize);
-hexSize.addEventListener("change", updateSize);
-ballColor.addEventListener("input", updateColor);
-hexColor.addEventListener("input", updateColor);
+ballSizeSelect.addEventListener("change", updateSize);
+hexSizeSelect.addEventListener("change", updateSize);
+ballColorInput.addEventListener("input", updateColor);
+hexColorInput.addEventListener("input", updateColor);
 
-updateSpeed();
-updateSize();
-updateColor();
-tickSoundLoop();
+// Initial setup on page load
+document.addEventListener('DOMContentLoaded', () => {
+  updateSpeed();
+  updateSize();
+  updateColor();
+  setupSoundLoop();
+});

@@ -6,15 +6,25 @@ body {
   padding: 20px;
 }
 
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
 .controls label {
-  margin: 10px;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* Use a fixed height or min-height for consistent centering */
   height: 60vh;
 }
 
@@ -23,8 +33,11 @@ body {
   width: 200px;
   height: 200px;
   background: #ccc;
-  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  /* Use a consistent clip-path for a true hexagon */
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   animation: rotate 2s linear infinite;
+  /* Add this to make sure a medium hexagon is selected by default */
+  transform: scale(1);
 }
 
 .ball-wrapper {
@@ -38,31 +51,60 @@ body {
 
 .ball {
   position: absolute;
-  top: 50%;
+  /* The ball should start at the top edge of its wrapper */
+  top: 0;
   left: 50%;
-  transform: translate(-50%, -50%) translateY(-80%);
+  /* Use transform for precise centering and positioning */
+  transform: translateX(-50%);
   background-color: red;
   border-radius: 50%;
   width: 30px;
   height: 30px;
 }
 
-/* Sizes */
-.hex-small { width: 100px; height: 100px; }
-.hex-medium { width: 200px; height: 200px; }
-.hex-big { width: 300px; height: 300px; }
+/* Hexagon Sizes */
+.hexagon.small {
+  width: 100px;
+  height: 100px;
+}
+.hexagon.medium {
+  width: 200px;
+  height: 200px;
+}
+.hexagon.big {
+  width: 300px;
+  height: 300px;
+}
 
-.ball-small { width: 15px; height: 15px; }
-.ball-medium { width: 30px; height: 30px; }
-.ball-big { width: 50px; height: 50px; }
+/* Ball Sizes */
+.ball.small {
+  width: 15px;
+  height: 15px;
+}
+.ball.medium {
+  width: 30px;
+  height: 30px;
+}
+.ball.big {
+  width: 50px;
+  height: 50px;
+}
 
 /* Animations */
 @keyframes rotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes orbit {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

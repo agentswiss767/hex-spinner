@@ -4,6 +4,10 @@ body {
   background: #f5f5f5;
   text-align: center;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .controls {
@@ -24,56 +28,41 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* Use a fixed height or min-height for consistent centering */
   height: 60vh;
 }
 
 .hexagon {
   position: relative;
   width: 200px;
-  height: 200px;
+  height: calc(200px * 0.866); /* Correct aspect ratio for a hexagon */
   background: #ccc;
-  /* Use a consistent clip-path for a true hexagon */
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   animation: rotate 2s linear infinite;
-  /* Add this to make sure a medium hexagon is selected by default */
   transform: scale(1);
-}
-
-.ball-wrapper {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  animation: orbit 2s linear infinite;
 }
 
 .ball {
   position: absolute;
-  /* The ball should start at the top edge of its wrapper */
-  top: 0;
-  left: 50%;
-  /* Use transform for precise centering and positioning */
-  transform: translateX(-50%);
   background-color: red;
   border-radius: 50%;
   width: 30px;
   height: 30px;
+  /* Use a single transform for the keyframe animation */
+  animation: moveOnHexagon 2s linear infinite;
 }
 
 /* Hexagon Sizes */
 .hexagon.small {
   width: 100px;
-  height: 100px;
+  height: calc(100px * 0.866);
 }
 .hexagon.medium {
   width: 200px;
-  height: 200px;
+  height: calc(200px * 0.866);
 }
 .hexagon.big {
   width: 300px;
-  height: 300px;
+  height: calc(300px * 0.866);
 }
 
 /* Ball Sizes */
@@ -100,11 +89,20 @@ body {
   }
 }
 
-@keyframes orbit {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Refined keyframes to move the ball along the hexagon's path precisely */
+@keyframes moveOnHexagon {
+  /* top point */
+  0% { transform: translate(50%, 0) translate(-50%, -50%); }
+  /* top right point */
+  16.67% { transform: translate(100%, 25%) translate(-50%, -50%); }
+  /* bottom right point */
+  33.33% { transform: translate(100%, 75%) translate(-50%, -50%); }
+  /* bottom point */
+  50% { transform: translate(50%, 100%) translate(-50%, -50%); }
+  /* bottom left point */
+  66.67% { transform: translate(0%, 75%) translate(-50%, -50%); }
+  /* top left point */
+  83.33% { transform: translate(0%, 25%) translate(-50%, -50%); }
+  /* back to top point */
+  100% { transform: translate(50%, 0) translate(-50%, -50%); }
 }
